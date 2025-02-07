@@ -2,6 +2,7 @@ import * as readline from 'readline';
 
 type Credentials = [string, string]; // Username and Password
 
+// User interface
 interface User{
     credentials: Credentials; // Username and Password
     id: number;
@@ -9,12 +10,19 @@ interface User{
 
 // The manager class
 class Manager{
+
+    // User Storage via Array
     private users: User[] = [];
 
+    // Adds user to the list
     addUser(user: User): void {
         this.users.push(user);
     }
+
+    // Deletes user from the list
     deleteUser(username: string): boolean {
+
+        // Check if username exists, if not return false
         const index = this.users.findIndex(user => user.credentials[0] === username);
         if (index !== -1){
             this.users.splice(index, 1);
@@ -24,12 +32,17 @@ class Manager{
             return false;
         }
     }
+
+    // Checks if username and password are correct
     checkUser(username: string, password: string): boolean {
         return this.users.some(user => user.credentials[0] === username && user.credentials[1] === password);
     }
+
+    // Check if username is used
     isUsernameTaken(username: string): boolean{
         return this.users.some(user => user.credentials[0] === username);
     }
+    // DEBUG (DELETE BEFORE FINAL PUSH)
     displayUsers(){
         console.log(this.users);
     }
@@ -67,22 +80,36 @@ const askQuestion = (query: string): Promise<string> => {
 
 // Main Menu function
 async function mainMenu(manager: Manager): Promise<void> {
+
+    // Display the menu and ask the user to choose
     displayMenu();
     const choice = await askQuestion('Choose an option: ');
+
+    // Choice logic
     switch (choice) {
+
+      // Login
       case '1':
         await login(manager);
         break;
+
+      // Create a user
       case '2':
         await createUser(manager);
         break;
+
+      // DEBUG (DELETE BEFORE FINAL PUSH)
       case '3':
         console.log(manager.displayUsers())
         break;
+
+      // Exit Program
       case '0':
         console.log('Exiting...');
         rl.close(); // Close the readline interface
         return; // Exit the loop
+
+      // If the user doesn't put 0, 1 or 2
       default:
         console.log('Invalid choice. Please try again.');
     }
@@ -93,10 +120,14 @@ async function mainMenu(manager: Manager): Promise<void> {
 
 // Login function
 async function login(manager: Manager): Promise<Manager> {
+
+    // Askign for username and password, clearing console for privacy reasons
     const username = await askQuestion('Enter your username: ');
     console.clear();
     const password = await askQuestion('Enter your password: ');
     console.clear();
+
+    // See if the information is valid, if not, send back to main menu
     const valid = manager.checkUser(username, password);
     if (valid){
         console.clear();
@@ -112,12 +143,20 @@ async function login(manager: Manager): Promise<Manager> {
 
 // User Management function
 async function manageUser(username: string, manager: Manager): Promise<Manager> {
+
+    // Display the menu and ask the user to choose
     displayUserMenu();
     const choice = await askQuestion('Please select an option ' + username + '! ');
+
+    // Choice logic
     switch(choice){
+
+        // Delete user
         case '1':
             await deleteUser(username, manager);
             break;
+        
+        // Log out
         case '2':
             console.clear();
             console.log("Logging out....");

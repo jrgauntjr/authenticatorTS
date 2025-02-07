@@ -41,4 +41,4 @@ The following items I plan to fix, improve, and/or add to this project in the fu
 
 * [ ] Saving the users to a file to be able to login after exiting the program
 * [ ] Include encryption like bcrpyt to protect usernames and passwords
-* [ ]
+* [ ] Give ability for the user to see their ID
