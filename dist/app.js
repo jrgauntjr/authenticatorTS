@@ -66,15 +66,11 @@ class Manager {
     isUsernameTaken(username) {
         return this.users.some(user => user.credentials[0] === username);
     }
-    displayUsers() {
-        console.log(this.users);
-    }
 }
 function displayMenu() {
     console.log("Please select your choice");
     console.log("1. Login");
     console.log("2. Create new user");
-    console.log("3. See all users (DEBUG)");
     console.log("0. Exit");
 }
 function displayUserMenu() {
@@ -102,9 +98,6 @@ function mainMenu(manager) {
                 break;
             case '2':
                 yield createUser(manager);
-                break;
-            case '3':
-                console.log(manager.displayUsers());
                 break;
             case '0':
                 console.log('Exiting...');

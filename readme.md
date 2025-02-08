@@ -15,9 +15,9 @@ Steps to build and/or run the software:
 
 Instructions for using the software:
 
-1. First step here
-2.
-3.
+1. Create however many users you would like
+2. Login with a username and password
+3. Once authenticated, you can either delete the account or log out
 
 ## Development Environment 
 
@@ -33,7 +33,7 @@ I found these websites useful in developing this software:
 
 * [Programming with Mosh's YouTube Video](https://youtu.be/d56mG7DezGs?si=2cVifI27mkl_GaCA)
 * [Readline documentation](https://nodejs.org/api/readline.html)
-* []()
+* [How to set up a new TypeScript Project](https://www.digitalocean.com/community/tutorials/typescript-new-project)
 
 ## Future Work
 
@@ -42,3 +42,4 @@ The following items I plan to fix, improve, and/or add to this project in the fu
 * [ ] Saving the users to a file to be able to login after exiting the program
 * [ ] Include encryption like bcrpyt to protect usernames and passwords
 * [ ] Give ability for the user to see their ID
+* [ ] Update the structure of the code to be more applicable to adapt to other systems

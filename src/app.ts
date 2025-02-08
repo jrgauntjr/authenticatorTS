@@ -42,10 +42,6 @@ class Manager{
     isUsernameTaken(username: string): boolean{
         return this.users.some(user => user.credentials[0] === username);
     }
-    // DEBUG (DELETE BEFORE FINAL PUSH)
-    displayUsers(){
-        console.log(this.users);
-    }
 }
 
 // Displaying the main menu function
@@ -53,7 +49,6 @@ function displayMenu(): void{
     console.log("Please select your choice");
     console.log("1. Login");
     console.log("2. Create new user");
-    console.log("3. See all users (DEBUG)");
     console.log("0. Exit")
 }
 
@@ -96,11 +91,6 @@ async function mainMenu(manager: Manager): Promise<void> {
       // Create a user
       case '2':
         await createUser(manager);
-        break;
-
-      // DEBUG (DELETE BEFORE FINAL PUSH)
-      case '3':
-        console.log(manager.displayUsers())
         break;
 
       // Exit Program
@@ -167,8 +157,12 @@ async function manageUser(username: string, manager: Manager): Promise<Manager> 
 
 // User Deletion function
 async function deleteUser(username: string, manager: Manager): Promise<Manager> {
+
+    // Ask for the user's password and check if it's correct
     const password = await askQuestion("Hi " + username + "! Please enter your password: ")
     const valid = manager.checkUser(username, password);
+
+    // If valid, delete the user, if not, tell the user the information is wrong
     if (valid){
         manager.deleteUser(username);
         console.clear();
@@ -182,8 +176,11 @@ async function deleteUser(username: string, manager: Manager): Promise<Manager> 
 
 // User Creation function
 async function createUser(manager: Manager): Promise<Manager> {
+    // Ask for a username and see if it's available
     const newUsername = await askQuestion('Create a username: ');
     const valid = manager.isUsernameTaken(newUsername);
+
+    // If the username is available, create a password and store it in the user base
     if (!valid){
         console.clear();
         const newPassword = await askQuestion('Create a password: ');
@@ -195,6 +192,8 @@ async function createUser(manager: Manager): Promise<Manager> {
         manager.addUser(newUser);
         return manager;
     }
+
+    // If the username isn't available, then tell the user to try again with a different username
     else{
         console.clear();
         console.log("Sorry, that username is unavailable, please try again with a different username");
